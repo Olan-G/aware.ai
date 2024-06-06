@@ -1,11 +1,13 @@
-#!pip install git+https://github.com/suno-ai/bark.git
+#pip install -Uqq WhisperSpeech
 
-from bark import SAMPLE_RATE, generate_audio, preload_models
-from IPython.display import Audio
+import torch
+import torch.nn.functional as F
 
-preload_models()
+from IPython.display import Markdown, HTML
+from whisperspeech.pipeline import Pipeline
 
-text = "I am but a lonely child."
+pipe = Pipeline(s2a_ref='collabora/whisperspeech:s2a-q4-tiny-en+pl.model')
 
-audio_array = generate_audio(text_prompt)
-Audio(audio_array, rate=SAMPLE_RATE)
+pipe.generate_to_notebook("""
+Hallo! Your picture seems to be someone holding a cup of coffee in front of a laptop.
+""")
